@@ -25,6 +25,8 @@ async function run() {
       if ( existingLabels.length === 0 ) {
         console.log( `PR does not have label '${requiredLabel}', Not assigning a reviewer.` );
         core.ExitCode = 0;
+
+        return;
       }
     }
 
