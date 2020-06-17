@@ -23,7 +23,8 @@ async function run() {
       const existingLabels = labels.filter(label => label.name == requiredLabel);
 
       if ( existingLabels.length === 0 ) {
-        throw Error("Required label does not exist for the PR");
+        console.log( `PR does not have label '${requiredLabel}', Not assigning a reviewer.` );
+        return;
       }
     }
 
