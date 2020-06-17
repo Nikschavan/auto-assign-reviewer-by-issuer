@@ -12,6 +12,9 @@ inputs:
     description: 'condifuration file'
     required: false
     default: '.github/auto-assigner.yml'
+  required_label:
+    description: "Required label for the PR to be assigned a reviewer"
+    required: false
 outputs:
   time: # output will be available to future steps 
     description: 'The message to output'

@@ -8,6 +8,7 @@ async function run() {
   try {
     const token = core.getInput("token", { required: true });
     const configPath = core.getInput("config");
+    const requiredLabel = core.getInput("required_label");
     const octokit = new github.GitHub(token);
 
     const configContent = await fetchContent(octokit, configPath);
@@ -15,6 +16,16 @@ async function run() {
 
     core.debug("config");
     core.debug(JSON.stringify(config));
+
+    // If required label is provided, check if it exists for the PR.
+    if ( requiredLabel ) {
+      const labels = context.payload.pull_request.labels;
+      const existingLabels = labels.filter(label => label.name == requiredLabel);
+
+      if ( existingLabels.length === 0 ) {
+        throw Error("Required label does not exist for the PR");
+      }
+    }
 
     const issuer = context.payload.pull_request.user.login;
 
